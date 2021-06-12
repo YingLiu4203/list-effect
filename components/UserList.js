@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 
 import Users from "../data/Users";
-import ListControls from "./ListControls";
+import ListHeaders from "./ListHeaders";
 
 function filterAndSort(text, asc) {
   const filtered = Users.filter((user) => {
@@ -13,15 +13,11 @@ function filterAndSort(text, asc) {
     }
   });
 
-  filtered.sort(
+  return filtered.sort(
     asc
       ? (u1, u2) => u1.name.localeCompare(u2.name)
       : (u1, u2) => u2.name.localeCompare(u1.name)
   );
-
-  console.log(filtered);
-
-  return filtered;
 }
 
 export default function UserList() {
@@ -51,7 +47,7 @@ export default function UserList() {
     <FlatList
       data={state.data}
       ListHeaderComponent={
-        <ListControls {...{ onFilter, onSort, asc: state.asc }} />
+        <ListHeaders onFilter={onFilter} onSort={onSort} asc={state.asc} />
       }
       renderItem={renderItem}
       keyExtractor={(item) => item.name}

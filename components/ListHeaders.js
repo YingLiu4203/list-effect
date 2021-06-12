@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function ListControls({ onFilter, onSort, asc }) {
+export default function ListHeaders({ onFilter, onSort, asc }) {
   return (
     <View style={styles.controls}>
       <ListFilter onFilter={onFilter} />
@@ -15,7 +15,14 @@ function ListSort({ onSort, asc }) {
 }
 
 function ListFilter({ onFilter }) {
-  return <TextInput autoFocus placeholder="Search" onChangeText={onFilter} />;
+  return (
+    <TextInput
+      style={styles.input}
+      autoFocus
+      placeholder="Search"
+      onChangeText={onFilter}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
@@ -26,5 +33,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     backgroundColor: "white",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "blue",
+    marginRight: 5,
   },
 });
