@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function ListHeaders({ onFilter, onSort, asc }) {
+export default function ListHeader({ onFilter, onSort, asc }) {
   return (
     <View style={styles.controls}>
       <ListFilter onFilter={onFilter} />
