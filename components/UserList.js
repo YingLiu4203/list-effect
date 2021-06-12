@@ -5,35 +5,42 @@ import Users from "../data/Users";
 import ListControls from "./ListControls";
 
 function filterAndSort(text, asc) {
-  return Users.filter((user) => {
+  const filtered = Users.filter((user) => {
     if (text) {
       return user.name.includes(text);
     } else {
       return true;
     }
-  }).sort(
+  });
+
+  filtered.sort(
     asc
       ? (u1, u2) => u1.name.localeCompare(u2.name)
       : (u1, u2) => u2.name.localeCompare(u1.name)
   );
+
+  console.log(filtered);
+
+  return filtered;
 }
 
 export default function UserList() {
-  const [asc, setAsc] = useState(true);
-  const [filter, setFilter] = useState("");
-  const [data, setData] = useState(Users);
+  const initState = { filter: "", asc: true, data: Users };
+
+  const [state, setState] = useState(initState);
 
   function onFilter(text) {
-    console.log(text);
-    setFilter(text);
-    let data2 = filterAndSort(filter, asc);
-    console.log(data2);
-    setData(data);
+    const filter = text;
+    const asc = state.asc;
+    const data = filterAndSort(filter, asc);
+    setState({ filter, asc, data });
   }
 
   function onSort() {
-    setAsc(!asc);
-    setData(filterAndSort(filter, asc));
+    const filter = state.filter;
+    const asc = !state.asc;
+    const data = filterAndSort(filter, asc);
+    setState({ filter, asc, data });
   }
 
   function renderItem({ item }) {
@@ -42,8 +49,10 @@ export default function UserList() {
 
   return (
     <FlatList
-      data={data}
-      ListHeaderComponent={<ListControls {...{ onFilter, onSort, asc }} />}
+      data={state.data}
+      ListHeaderComponent={
+        <ListControls {...{ onFilter, onSort, asc: state.asc }} />
+      }
       renderItem={renderItem}
       keyExtractor={(item) => item.name}
     />
