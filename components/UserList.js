@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, Text } from "react-native";
 import Users from "../data/Users";
 import ListHeader from "./ListHeader";
 
+// be careful to not change the original data
 function filterAndSort(text, asc) {
   const filtered = Users.filter((user) => {
     if (text) {
@@ -46,9 +47,7 @@ export default function UserList() {
   return (
     <FlatList
       data={state.data}
-      ListHeaderComponent={
-        <ListHeader onFilter={onFilter} onSort={onSort} asc={state.asc} />
-      }
+      ListHeaderComponent={ListHeader({ onFilter, onSort, asc: state.asc })}
       renderItem={renderItem}
       keyExtractor={(item) => item.name}
     />
